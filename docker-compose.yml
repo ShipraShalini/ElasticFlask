@@ -4,7 +4,7 @@ services:
   elasticsearch:
     image: "elasticsearch:7.6.0"
     networks:
-      - elk
+      - backend
     restart: always
     volumes:
       - ./ES_DATA:/usr/share/elasticsearch/data
@@ -14,6 +14,7 @@ services:
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
     ports:
       - "9200:9200"
+      - "9300:9300"
     healthcheck:
       test: ["CMD", "curl","-s" ,"-f", "http://localhost:9200/_cat/health"]
       retries: 6
@@ -22,7 +23,7 @@ services:
     build: app/
     restart: always
     networks:
-      - elk
+      - backend
     volumes:
       - .app:/usr/share/app
     ports:
@@ -31,5 +32,4 @@ services:
       - elasticsearch
 
 networks:
-  elk:
-    driver: bridge
+  backend:

@@ -6,7 +6,7 @@ from flask import Flask, jsonify, request
 
 app = Flask(__name__)
 
-es = Elasticsearch()
+es = Elasticsearch(hosts=[{'host': 'elasticsearch'}])
 
 
 @app.route('/', methods=['GET'])
