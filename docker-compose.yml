@@ -7,7 +7,7 @@ services:
       - backend
     restart: always
     volumes:
-      - ./ES_DATA:/usr/share/elasticsearch/data
+      - ./elastic/ES_DATA:/usr/share/elasticsearch/data
     environment:
       - discovery.type=single-node
       - bootstrap.memory_lock=true
@@ -19,15 +19,15 @@ services:
       test: ["CMD", "curl","-s" ,"-f", "http://localhost:9200/_cat/health"]
       retries: 6
 
-  web:
+  app:
     build: app/
     restart: always
+    volumes:
+      - ./app:/usr/share/app
     networks:
       - backend
-    volumes:
-      - .app:/usr/share/app
     ports:
-      - "6000:6000"
+      - "5000:5000"
     depends_on:
       - elasticsearch
 
