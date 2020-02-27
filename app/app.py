@@ -10,8 +10,13 @@ es = Elasticsearch()
 
 
 @app.route('/', methods=['GET'])
+def hello():
+    return jsonify({'message': 'Hello!!'})
+
+
+@app.route('/data', methods=['GET'])
 def index():
-    results = es.get(index='contents', doc_type='title', id='my-new-slug')
+    results = es.get(index='contents', doc_type='title', id='abc')
     return jsonify(results['_source'])
 
 
@@ -52,4 +57,4 @@ def search():
 
 
 if __name__ == '__main__':
-    app.run(port=5000, debug=True)
+    app.run(port=6000, debug=True)

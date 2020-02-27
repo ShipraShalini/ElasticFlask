@@ -1,27 +1,35 @@
-version: '2'
+version: '3'
 
 services:
   elasticsearch:
-      build: elasticsearch/
-      volumes:
-        - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
-      ports:
-        - "9200:9200"
-        - "9300:9300"
-      environment:
-        ES_JAVA_OPTS: "-Xmx256m -Xms256m"
-      networks:
-        - elk
+    image: "elasticsearch:7.6.0"
+    networks:
+      - elk
+    restart: always
+    volumes:
+      - ./ES_DATA:/usr/share/elasticsearch/data
+    environment:
+      - discovery.type=single-node
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ports:
+      - "9200:9200"
+    healthcheck:
+      test: ["CMD", "curl","-s" ,"-f", "http://localhost:9200/_cat/health"]
+      retries: 6
 
   web:
-    build: ./web
+    build: app/
     restart: always
+    networks:
+      - elk
+    volumes:
+      - .app:/usr/share/app
     ports:
-      - "5000:5000"
-    environment:
-      - "DOCKER_MACHINE_IP=${DOCKER_MACHINE_IP}"
+      - "6000:6000"
     depends_on:
       - elasticsearch
+
 networks:
   elk:
     driver: bridge
