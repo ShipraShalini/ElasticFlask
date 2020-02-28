@@ -21,6 +21,8 @@ services:
 
   app:
     build: app/
+    stdin_open: true
+    tty: true
     restart: always
     volumes:
       - ./app:/usr/share/app

@@ -3,8 +3,11 @@ from datetime import datetime
 from elasticsearch import Elasticsearch
 
 from flask import Flask, jsonify, request
+from flask_cors import CORS
+
 
 app = Flask(__name__)
+CORS(app)
 
 es = Elasticsearch(hosts=[{'host': 'elasticsearch'}])
 
