@@ -1,12 +1,15 @@
 from datetime import datetime
 
 from elasticsearch import Elasticsearch
+from elasticsearch.exceptions import NotFoundError as ESNotFoundError
 
 from flask import Flask, jsonify, request
+
 from flask_cors import CORS
 
 
 app = Flask(__name__)
+
 CORS(app)
 
 es = Elasticsearch(hosts=[{'host': 'elasticsearch'}])
@@ -15,12 +18,6 @@ es = Elasticsearch(hosts=[{'host': 'elasticsearch'}])
 @app.route('/', methods=['GET'])
 def hello():
     return jsonify({'message': 'Hello!!'})
-
-
-@app.route('/data', methods=['GET'])
-def index():
-    results = es.get(index='contents', doc_type='title', id='abc')
-    return jsonify(results['_source'])
 
 
 @app.route('/add', methods=['POST'])
@@ -44,8 +41,6 @@ def insert_data():
 
 @app.route('/search', methods=['POST'])
 def search():
-    keyword = request.json['keyword']
-
     body = {
         "query": {
             "multi_match": {

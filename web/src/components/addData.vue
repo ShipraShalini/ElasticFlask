@@ -1,27 +1,16 @@
 <template>
     <div id="add-data">
-        <div v-if="submitted"><h3>Follwing Data has been added to elasticsearch.</h3></div>
+        <div v-if="submitted"><h3>Data has been added to elasticsearch.</h3></div>
         <div v-if="!submitted">
-            <h2>Add new data</h2>
+            <h3>Add data to Elastic</h3>
             <form>
-                <label>Slug:</label>
-                <input type="text" v-model="slug" required />
-                <label>Title:</label>
-                <input type="text" v-model="title" required />
-                <label>Content:</label>
-                <textarea v-model="content"></textarea>
-                <button v-on:click.prevent="post">Add Data</button>
+                <input type="text" v-model="slug" placeholder="Slug" required />
+                <input type="text" v-model="title" placeholder="Title" required />
+                <textarea rows="10" v-model="content" placeholder="Content" required></textarea>
+                <button v-on:click.prevent="post">Submit Data</button>
             </form>
         </div>
 
-            <div id="preview">
-                <h3>Preview</h3>
-                <form>
-                    <p>Slug: {{ slug }}</p>
-                    <p>Title: {{ title }}</p>
-                    <p>Content: {{ content }}</p>
-                </form>
-            </div>
     </div>
 </template>
 
@@ -58,16 +47,24 @@
         margin: 20px auto;
         max-width: 500px;
     }
-    label {
-        display: block;
-        margin: 20px 0 10px;
+
+    button {
+        border: 1px solid teal;
+        border-radius: 4px;
+        width: 100px;
+        height: 30px;
+        text-align: center;
+        max-width: 300px;
+        margin: auto;
+        color: teal;
     }
-    input[type='text'], textarea {
+
+    input, textarea {
         display: block;
         width: 100%;
         padding: 8px;
+        border: 1px solid #bdbdbd;
+        border-radius: 4px;
     }
-    h2 {
-        text-align: center;
-    }
+
 </style>
