@@ -43,7 +43,10 @@
                 this.axios.post(
                     'http://localhost:5000/search',
                     {keyword: this.keyword},
-                    {headers: {'Content-type': 'application/json'}}
+                    {
+                        headers: {'Content-type': 'application/json'},
+                        withCredentials: true
+                    }
                 ).then(response => {
                     this.submitted = true;
                     console.log(response);
@@ -55,13 +58,12 @@
                 }).catch((error) => {console.log(error)})
             }
         }
-
     }
 </script>
 
 <style scoped>
-    #show-data, #search-data {
-        max-width: 800px;
+    #search-data {
+        max-width: 700px;
         margin: 0 auto;
     }
     .res-class {

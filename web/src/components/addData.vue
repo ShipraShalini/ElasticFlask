@@ -7,7 +7,7 @@
                 <input type="text" v-model="slug" placeholder="Slug" required />
                 <input type="text" v-model="title" placeholder="Title" required />
                 <textarea rows="10" v-model="content" placeholder="Content" required></textarea>
-                <button v-on:click.prevent="post">Submit Data</button>
+                <div class="center-align"><button v-on:click.prevent="post">Submit Data</button></div>
             </form>
         </div>
 
@@ -26,11 +26,17 @@
         },
         methods: {
             post: function () {
-                this.axios.post('http://localhost:5000/add', {
-                    slug: this.slug,
-                    title: this.title,
-                    content: this.content,
-                }, {headers: {'Content-type': 'application/json'}}
+                this.axios.post(
+                    'http://localhost:5000/add',
+                    {
+                        slug: this.slug,
+                        title: this.title,
+                        content: this.content,
+                    },
+                    {
+                        headers: {'Content-type': 'application/json'},
+                        withCredentials: true
+                    }
                 ).then(response => {
                     this.submitted = true;
                     return response
