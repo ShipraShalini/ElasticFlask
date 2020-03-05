@@ -2,7 +2,7 @@
     <div id="add-data">
         <div v-if="submitted"><h3>Data has been added to elasticsearch.</h3></div>
         <div v-if="!submitted">
-            <h3>Add data to Elastic</h3>
+            <h3>Add data to ElasticSearch</h3>
             <form>
                 <input type="text" v-model="slug" placeholder="Slug" required />
                 <input type="text" v-model="title" placeholder="Title" required />

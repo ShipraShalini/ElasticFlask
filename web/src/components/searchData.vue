@@ -12,8 +12,8 @@
         </div>
         <div id="show-data">
             <div v-if="submitted">
-                <h2>Elasticsearch hits:</h2>
-                <div v-if="results">
+                <div v-if="results.length">
+                    <h2>Elasticsearch hits:</h2>
                     <div v-for="result in results" v-bind:key="result._id" class="res-class">
                         <h3>{{ result._id }}</h3>
                         <p>ID: {{ result._id }}</p>
@@ -21,8 +21,10 @@
                         <p>Score: {{ result._score }}</p>
                         <p>Type: {{ result._type }}</p>
                         <p>Source: </p><pre>{{ result._source }}</pre>
-
                     </div>
+                </div>
+                <div v-else>
+                    <h2>No Elasticsearch Hits.</h2>
                 </div>
             </div>
         </div>
@@ -49,7 +51,6 @@
                     }
                 ).then(response => {
                     this.submitted = true;
-                    console.log(response);
                     this.results = response.data;
                     for (var res in this.results) {
                         var content = res._source;
